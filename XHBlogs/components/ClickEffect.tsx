@@ -1,142 +1,100 @@
 "use client";
-
-import { useEffect, useRef } from "react";
-
-type StarParticle = {
-  x: number;
-  y: number;
-  velocityX: number;
-  velocityY: number;
-  gravity: number;
-  rotation: number;
-  rotationSpeed: number;
-  size: number;
-  opacity: number;
-  color: string;
-};
-
-type Ripple = {
-  x: number;
-  y: number;
-  radius: number;
-  opacity: number;
-};
-
-const STAR_COLORS = ["#f2a7bb", "#c9879e", "#9eb9c5", "#f5cf8e", "#fff7e8"];
+import { useEffect, useRef } from 'react';
 
 export default function ClickEffect() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
     const canvas = canvasRef.current;
-    const context = canvas?.getContext("2d");
-    if (!canvas || !context) return;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
-    const stars: StarParticle[] = [];
-    const ripples: Ripple[] = [];
-    let animationFrame = 0;
+    let ripples: any[] = [];
 
     const resize = () => {
-      const scale = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = window.innerWidth * scale;
-      canvas.height = window.innerHeight * scale;
-      canvas.style.width = `${window.innerWidth}px`;
-      canvas.style.height = `${window.innerHeight}px`;
-      context.setTransform(scale, 0, 0, scale, 0, 0);
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
     };
+    window.addEventListener('resize', resize);
+    resize();
 
-    const drawStar = (star: StarParticle) => {
-      context.save();
-      context.translate(star.x, star.y);
-      context.rotate(star.rotation);
-      context.globalAlpha = Math.max(0, star.opacity);
-      context.fillStyle = star.color;
-      context.shadowBlur = 9;
-      context.shadowColor = star.color;
-      context.beginPath();
+    class Ripple {
+      x: number; y: number;
+      r: number;        // 半径
+      maxR: number;     // 最大半径
+      opacity: number;  // 透明度
+      velocity: number; // 扩散速度
 
-      for (let index = 0; index < 8; index += 1) {
-        const angle = -Math.PI / 2 + index * Math.PI / 4;
-        const radius = index % 2 === 0 ? star.size : star.size * 0.36;
-        const pointX = Math.cos(angle) * radius;
-        const pointY = Math.sin(angle) * radius;
-        if (index === 0) context.moveTo(pointX, pointY);
-        else context.lineTo(pointX, pointY);
+      constructor(x: number, y: number) {
+        this.x = x;
+        this.y = y;
+        this.r = 0;
+        this.maxR = 60;   // 涟漪扩散的大小，60 比较克制
+        this.opacity = 0.6;
+        this.velocity = 2.5;
       }
 
-      context.closePath();
-      context.fill();
-      context.restore();
-    };
-
-    const handleClick = (event: MouseEvent) => {
-      ripples.push({ x: event.clientX, y: event.clientY, radius: 3, opacity: 0.68 });
-
-      const count = 10 + Math.floor(Math.random() * 5);
-      for (let index = 0; index < count; index += 1) {
-        const angle = (Math.PI * 2 * index) / count + (Math.random() - 0.5) * 0.45;
-        const speed = 1.4 + Math.random() * 3.1;
-        stars.push({
-          x: event.clientX + (Math.random() - 0.5) * 8,
-          y: event.clientY + (Math.random() - 0.5) * 8,
-          velocityX: Math.cos(angle) * speed,
-          velocityY: Math.sin(angle) * speed - (0.4 + Math.random() * 1.5),
-          gravity: 0.045 + Math.random() * 0.035,
-          rotation: Math.random() * Math.PI,
-          rotationSpeed: (Math.random() - 0.5) * 0.22,
-          size: 3.5 + Math.random() * 4.8,
-          opacity: 1,
-          color: STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)],
-        });
+      update() {
+        this.r += this.velocity;
+        // 随着半径变大，扩散速度减慢（物理模拟）
+        this.velocity *= 0.96;
+        // 透明度线性衰减
+        this.opacity -= 0.015;
       }
+
+      draw() {
+        if (!ctx) return;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        // 使用你主题里的靛蓝色，并带上动态透明度
+        ctx.strokeStyle = `rgba(129, 140, 248, ${this.opacity})`;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // 内部再加一个极淡的实心圆，增加“触碰感”
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r * 0.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(129, 140, 248, ${this.opacity * 0.3})`;
+        ctx.fill();
+      }
+    }
+
+    const handleClick = (e: MouseEvent) => {
+      ripples.push(new Ripple(e.clientX, e.clientY));
     };
+
+    window.addEventListener('click', handleClick);
 
     const animate = () => {
-      context.clearRect(0, 0, window.innerWidth, window.innerHeight);
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      for (let index = ripples.length - 1; index >= 0; index -= 1) {
-        const ripple = ripples[index];
-        ripple.radius += 3.2;
-        ripple.opacity -= 0.03;
-        context.save();
-        context.globalAlpha = Math.max(0, ripple.opacity);
-        context.strokeStyle = "#d695aa";
-        context.lineWidth = 1.6;
-        context.beginPath();
-        context.arc(ripple.x, ripple.y, ripple.radius, 0, Math.PI * 2);
-        context.stroke();
-        context.restore();
-        if (ripple.opacity <= 0) ripples.splice(index, 1);
+      // 增加全局模糊，让涟漪更有“云端”质感
+      ctx.shadowBlur = 15;
+      ctx.shadowColor = 'rgba(129, 140, 248, 0.5)';
+
+      for (let i = 0; i < ripples.length; i++) {
+        ripples[i].update();
+        ripples[i].draw();
+        if (ripples[i].opacity <= 0) {
+          ripples.splice(i, 1);
+          i--;
+        }
       }
-
-      for (let index = stars.length - 1; index >= 0; index -= 1) {
-        const star = stars[index];
-        star.x += star.velocityX;
-        star.y += star.velocityY;
-        star.velocityY += star.gravity;
-        star.velocityX *= 0.985;
-        star.rotation += star.rotationSpeed;
-        star.opacity -= 0.019;
-        drawStar(star);
-        if (star.opacity <= 0) stars.splice(index, 1);
-      }
-
-      animationFrame = window.requestAnimationFrame(animate);
+      requestAnimationFrame(animate);
     };
-
-    resize();
-    window.addEventListener("resize", resize);
-    window.addEventListener("click", handleClick, { passive: true });
     animate();
 
     return () => {
-      window.cancelAnimationFrame(animationFrame);
-      window.removeEventListener("resize", resize);
-      window.removeEventListener("click", handleClick);
+      window.removeEventListener('resize', resize);
+      window.removeEventListener('click', handleClick);
     };
   }, []);
 
-  return <canvas ref={canvasRef} className="pointer-events-none fixed inset-0 z-[9999]" aria-hidden="true" />;
+  return (
+    <canvas
+      ref={canvasRef}
+      className="fixed inset-0 pointer-events-none z-[9999]"
+    />
+  );
 }

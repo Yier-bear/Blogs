@@ -42,12 +42,13 @@ function getDirActivities(dirName: string, typeLabel: '文章' | '杂谈' | '说
 export default async function AboutPage() {
   const fullPath = path.join(process.cwd(), 'app', 'about', 'about.md');
   let contentHtml = "博主很懒，还没有写自我介绍哦...";
-  const coverImage = "/ayu-about-hero.jpg";
+  let coverImage = "https://bu.dusays.com/2026/03/24/69c23dc278c78.jpg";
 
   try {
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     // 🌟 改为 let，以便进行文本预清洗
-    let { content } = matter(fileContents);
+    let { data, content } = matter(fileContents);
+    if (data.cover) coverImage = data.cover;
 
     // ==========================================
     // 🌟 解析前物理清洗区
@@ -102,7 +103,7 @@ export default async function AboutPage() {
     <div className="min-h-screen relative pb-20">
       <Navbar />
       <PageTransition>
-        <main className="relative z-10 mx-auto mt-20 w-full max-w-5xl md:mt-24">
+        <main className="w-[95%] md:w-[90%] max-w-4xl mx-auto mt-24 md:mt-28 relative z-10">
 
           {/* 🌟 注入 About 页面专用的高颜值 Prose 全局样式 */}
           <style dangerouslySetInnerHTML={{ __html: `

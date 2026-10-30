@@ -29,11 +29,11 @@ export default function ProjectsBoard() {
           <BackButton />
         </div>
         <div className="text-center md:text-left w-full">
-          <h1 className="text-4xl font-black text-[#493d3a] dark:text-white mb-4 tracking-widest drop-shadow-sm">
-            AI 产品项目
+          <h1 className="text-4xl font-black text-slate-900 dark:text-white mb-4 tracking-widest drop-shadow-sm uppercase">
+            Projects Matrix
           </h1>
-          <p className="text-[#806d68] dark:text-slate-300 font-serif">
-            从产品洞察、体验研究到可用原型的实践档案。
+          <p className="text-slate-600 dark:text-slate-400 font-serif">
+            开源项目、科研代码与实验室折腾记录。
           </p>
         </div>
       </div>
@@ -111,7 +111,7 @@ export default function ProjectsBoard() {
             animate={{ opacity: 1 }}
             className="col-span-full text-center py-20 text-slate-500 font-serif w-full"
           >
-            暂时没有找到与「{searchQuery}」相关的项目。
+            云端尚未建立代号为 [{searchQuery}] 的档案...
           </motion.div>
         )}
       </motion.div>

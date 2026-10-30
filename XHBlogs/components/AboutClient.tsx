@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { BookOpen, Activity } from 'lucide-react';
+import { BookOpen, MessageSquare, Sparkles, Activity } from 'lucide-react';
 import Comments from './Comments';
 import { siteConfig } from '../siteConfig';
 import Link from 'next/link';
@@ -124,38 +124,42 @@ export default function AboutClient({
   };
 
   return (
-    <div className="relative overflow-hidden pb-12 md:pb-20">
-      <section className="group relative h-[300px] w-full overflow-hidden sm:h-[360px] md:h-[430px]">
-        <img src={coverImage} alt="关于 ayu 的主视觉" className="absolute inset-0 h-full w-full object-cover transition-transform duration-[1600ms] [mask-image:radial-gradient(ellipse_94%_92%_at_center,#000_62%,transparent_100%)] group-hover:scale-[1.03]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#493d3a]/68 via-transparent to-[#f8ebe6]/16 [mask-image:radial-gradient(ellipse_94%_92%_at_center,#000_62%,transparent_100%)]" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,#f8ebe6_0%,transparent_9%,transparent_91%,#f8ebe6_100%)] opacity-80" />
-        <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_bottom,#f8ebe6_0%,transparent_12%,transparent_84%,#f8ebe6_100%)] opacity-55" />
-        <div className="absolute inset-x-0 bottom-0 mx-auto flex w-full max-w-4xl flex-col gap-4 px-6 pb-8 text-white sm:px-10 md:pb-10">
-          <div className="flex flex-wrap gap-2 text-[9px] font-semibold tracking-[.12em] text-white/85">
-            <span className="rounded-full border border-white/25 bg-white/12 px-3 py-1.5 backdrop-blur-md">AI 产品设计</span>
-            <span className="rounded-full border border-white/25 bg-white/12 px-3 py-1.5 backdrop-blur-md">AGENT 工作流</span>
-            <span className="rounded-full border border-white/25 bg-white/12 px-3 py-1.5 backdrop-blur-md">持续创造中</span>
-          </div>
-          <div>
-            <p className="text-[10px] font-semibold tracking-[.22em] text-white/70">ABOUT AYU</p>
-            <h1 className="mt-2 text-4xl font-black tracking-tight text-white sm:text-5xl">关于</h1>
-            <p className="mt-3 max-w-xl text-xs leading-6 text-white/80 sm:text-sm">从真实问题出发，把 AI 能力做成清晰、可靠且有温度的产品体验。</p>
-          </div>
-        </div>
-      </section>
+    <div className="bg-white/60 dark:bg-slate-800/50 backdrop-blur-xl rounded-[40px] shadow-2xl border border-white/40 dark:border-white/10 overflow-hidden transition-colors duration-700 relative">
 
-      <div className="relative mx-auto max-w-4xl px-5 sm:px-10">
-        <div className="mt-8 mb-8 flex items-center justify-between gap-4 border-b border-[#cfbec0]/55 pb-4">
-          <p className="hidden text-[10px] leading-5 text-[#917c76] sm:block">身份 · 方向 · 兴趣 · 联系</p>
-          <div className="flex w-full items-center gap-1 rounded-full border border-white/65 bg-white/45 p-1 shadow-sm backdrop-blur-md sm:w-auto">
-            <button onClick={() => handleTabChange('intro')} className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[10px] font-semibold transition md:flex-none ${activeTab === 'intro' ? 'bg-[#dfe8eb] text-[#536b77] shadow-sm' : 'text-[#806e69] hover:bg-white/65'}`}>
-              <BookOpen size={12} /> 关于我
+      <div className="w-full h-40 sm:h-48 md:h-64 relative bg-slate-200 dark:bg-slate-700 overflow-hidden group">
+        <img src={coverImage} alt="About Hero" className="w-full h-full object-cover opacity-90 transition-transform duration-1000 group-hover:scale-105" />
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 to-transparent"></div>
+      </div>
+
+      <div className="px-5 sm:px-8 md:px-16 pb-10 md:pb-16 relative">
+        <div className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-white dark:border-slate-800 shadow-2xl overflow-hidden -mt-12 md:-mt-16 relative z-20 bg-white">
+          <img src={siteConfig.avatarUrl} alt="avatar" className="w-full h-full object-cover" />
+        </div>
+
+        {/* 🌟 核心修复区：手机端排版优雅适配 */}
+        <div className="mt-4 md:mt-6 mb-6 md:mb-8 relative flex flex-col md:flex-row md:items-end justify-between gap-5 md:gap-4">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tight mb-1 md:mb-3 transition-colors duration-700">关于我</h1>
+            <p className="text-sm md:text-lg text-indigo-600 dark:text-indigo-400 font-bold tracking-widest uppercase transition-colors duration-700">Hello World, I'm {siteConfig.authorName}</p>
+          </div>
+
+          <div className="flex items-center w-full md:w-auto gap-1 bg-white/50 dark:bg-slate-900/50 p-1 md:p-1.5 rounded-xl md:rounded-2xl shadow-inner border border-white/40 dark:border-white/5">
+            <button
+              onClick={() => handleTabChange('intro')}
+              className={`flex-1 md:flex-none px-4 md:px-6 py-2 md:py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-black transition-all duration-300 ${activeTab === 'intro' ? 'bg-indigo-500 text-white shadow-md' : 'text-slate-500 hover:text-indigo-500'}`}
+            >
+              自我介绍
             </button>
-            <button onClick={() => handleTabChange('activity')} className={`flex flex-1 items-center justify-center gap-1.5 rounded-full px-4 py-2 text-[10px] font-semibold transition md:flex-none ${activeTab === 'activity' ? 'bg-[#dfe8eb] text-[#536b77] shadow-sm' : 'text-[#806e69] hover:bg-white/65'}`}>
-              <Activity size={12} /> 最近动态
+            <button
+              onClick={() => handleTabChange('activity')}
+              className={`flex-1 md:flex-none px-4 md:px-6 py-2 md:py-2 rounded-lg md:rounded-xl text-xs md:text-sm font-black transition-all duration-300 ${activeTab === 'activity' ? 'bg-indigo-500 text-white shadow-md' : 'text-slate-500 hover:text-indigo-500'}`}
+            >
+              研究动态
             </button>
           </div>
         </div>
+
+        <div className="w-full h-px bg-slate-300/50 dark:bg-slate-700 mb-6 md:mb-8"></div>
 
         <AnimatePresence mode="wait">
           {activeTab === 'intro' && (
@@ -208,9 +212,9 @@ export default function AboutClient({
                     .prose pre code { font-size: 0.9em !important; }
                   }
                 `}</style>
-                <div className="about-prose prose prose-slate max-w-none scroll-smooth font-serif leading-relaxed text-[#584a46] transition-colors duration-700 dark:prose-invert" dangerouslySetInnerHTML={{ __html: contentHtml }} />
+                <div className="prose prose-slate dark:prose-invert prose-base md:prose-lg max-w-none text-slate-800 dark:text-slate-200 font-serif transition-colors duration-700 leading-relaxed scroll-smooth" dangerouslySetInnerHTML={{ __html: contentHtml }} />
               </div>
-              <section className="mt-14 border-t border-[#cfbec0]/55 pt-10"><p className="mb-6 text-[10px] font-semibold tracking-[.18em] text-[#856d72]">一起聊聊</p><Comments /></section>
+              <div className="mt-12 md:mt-16"><Comments /></div>
             </motion.div>
           )}
 

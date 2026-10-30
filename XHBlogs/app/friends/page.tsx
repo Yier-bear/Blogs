@@ -13,7 +13,9 @@ export default function FriendsPage() {
     <div className="min-h-screen relative pb-20">
       <Navbar />
       <PageTransition>
-        <FriendsBoard />
+        <div className="mt-28">
+          <FriendsBoard />
+        </div>
       </PageTransition>
     </div>
   );
