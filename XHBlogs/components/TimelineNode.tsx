@@ -23,10 +23,10 @@ export default function TimelineNode({ post, index }: { post: any, index: number
 
       {/* 卡片实体 */}
       <Link href={`/posts/${post.slug}`} className="order-1 w-full md:w-5/12 group">
-        <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-lg rounded-3xl shadow-lg border border-white/60 dark:border-white/10 transition-all duration-500 hover:scale-[1.03] hover:bg-white/70 dark:hover:bg-slate-800/70 hover:shadow-2xl overflow-hidden flex flex-col">
+        <div className="flex flex-col overflow-hidden rounded-3xl border border-[#eadfd5]/75 bg-[#fffdf9]/90 shadow-lg backdrop-blur-lg transition-all duration-500 hover:scale-[1.03] hover:bg-white hover:shadow-2xl">
 
           {/* 上半部分：封面图 */}
-          <div className="w-full h-40 sm:h-48 overflow-hidden relative bg-slate-200 dark:bg-slate-700">
+          <div className="relative h-40 w-full overflow-hidden bg-[#f4e8dc] sm:h-48 dark:bg-[#493d3a]">
             <img
               src={post.cover}
               alt={post.title}
@@ -44,7 +44,7 @@ export default function TimelineNode({ post, index }: { post: any, index: number
               </div>
             </div>
 
-            <h3 className="font-bold text-lg text-slate-800 dark:text-white mb-3 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors line-clamp-2 leading-tight">
+            <h3 className="mb-3 line-clamp-2 text-lg font-bold leading-tight text-[#493d3a] transition-colors group-hover:text-indigo-600">
               {post.title}
             </h3>
 
@@ -62,7 +62,7 @@ export default function TimelineNode({ post, index }: { post: any, index: number
               </div>
             )}
 
-            <p className="text-xs text-slate-600 dark:text-slate-400 leading-relaxed line-clamp-2 font-medium">
+            <p className="line-clamp-2 text-xs font-medium leading-relaxed text-[#806e69]">
               {post.description}
             </p>
           </div>

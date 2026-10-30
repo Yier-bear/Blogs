@@ -1,5 +1,3 @@
-// 🛡️ 本文件由控制台自动生成，请勿手动修改
-
 export type Project = {
   id: string;
   name: string;
@@ -10,15 +8,8 @@ export type Project = {
 };
 
 export const projectsData: Project[] = [
-  {
-    "id": "proj_1775049332705",
-    "name": "Computational Chemistry Tool",
-    "githubUrl": "https://github.com/heiehiehi/Computational_Chemistry_Tool",
-    "description": "该工具本作者使用在Win下的WSL2平台，系统为Ubuntu22，个人使用请依据自己数据进行修改（这些工具只是整合了一些流程）",
-    "icon": "🚀",
-    "tags": [
-      "Gromacs",
-      "RMSF"
-    ]
-  },
+  { id: "ayu-ai-workbench", name: "AI 产品工作台", description: "将需求洞察、Prompt 实验、原型验证和用户反馈组织在同一个 AI 产品工作流中。", icon: "✦", githubUrl: "https://github.com/Yier-bear", tags: ["AI Product", "Workflow", "UX"] },
+  { id: "toc-community", name: "TOC 产品社区", description: "面向产品人和创作者的开放想法社区，让不完整的产品判断也能被公开讨论和继续生长。", icon: "◌", githubUrl: "https://github.com/Yier-bear", tags: ["Community", "Content", "Product"] },
+  { id: "agent-research", name: "Agent 体验研究", description: "围绕授权、过程反馈、失败恢复与信任，整理 Agent 产品的交互模式和评估框架。", icon: "◒", githubUrl: "https://github.com/Yier-bear", tags: ["Agent", "Research", "AI UX"] },
+  { id: "interview-notes", name: "产品面经整理器", description: "按能力模型沉淀案例、问题和复盘，让面试准备从背答案变成组织自己的产品判断。", icon: "⌁", githubUrl: "https://github.com/Yier-bear", tags: ["Knowledge", "Career", "Prototype"] },
 ];

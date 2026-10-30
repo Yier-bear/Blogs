@@ -48,14 +48,14 @@ export default function PhotoWallClient() {
 
           {!currentAlbum && (
             <div className="animate-fade-in-up">
-              <div className="flex flex-col md:flex-row justify-between items-center mb-16 gap-6">
-                <div>
-                  <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-widest mb-2 transition-colors duration-700">光影画廊</h1>
-                  <p className="text-slate-600 dark:text-slate-400 font-medium tracking-wider transition-colors duration-700">定格时间，封存泰拉与现实的每一次心跳</p>
+              <div className="ayu-page-heading mb-10 flex flex-col items-start justify-between gap-5 md:flex-row md:items-end">
+                <div className="text-left">
+                  <h1 className="text-[28px] font-bold tracking-tight text-[#493d3a]">照片墙</h1>
+                  <p className="mt-1.5 text-[11px] leading-5 text-[#806e69]">定格时间，封存现实中的每一次心跳</p>
                 </div>
 
-                <div className="relative w-full md:w-80 group">
-                  <svg className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none text-slate-500 dark:text-slate-400 group-focus-within:text-indigo-500 transition-colors" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <div className="relative w-full max-w-xs group">
+                  <svg className="pointer-events-none absolute left-3 top-1/2 z-10 h-4 w-4 -translate-y-1/2 text-[#8ca0a9] transition-colors group-focus-within:text-[#647e8a]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                   <input
@@ -63,7 +63,7 @@ export default function PhotoWallClient() {
                     placeholder="搜索相册名或照片描述..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full h-12 pl-12 pr-4 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md border border-white/50 dark:border-white/10 rounded-full text-sm text-slate-800 dark:text-white placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 shadow-sm transition-all duration-700"
+                    className="h-9 w-full rounded-xl border border-white/70 bg-white/55 pl-9 pr-3 text-sm text-[#493d3a] shadow-sm backdrop-blur-xl outline-none transition focus:ring-2 focus:ring-[#78909d]/30 placeholder:text-[#a28f89]"
                   />
                 </div>
               </div>
@@ -161,8 +161,8 @@ export default function PhotoWallClient() {
                     <span className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700"></span>
                     <span className="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{currentAlbum.date}</span>
                   </div>
-                  <h1 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-wider mb-2">{currentAlbum.title}</h1>
-                  <p className="text-slate-600 dark:text-slate-400 font-medium text-lg">{currentAlbum.description}</p>
+                  <h1 className="text-[28px] font-bold tracking-tight text-[#493d3a]">{currentAlbum.title}</h1>
+                  <p className="mt-1.5 text-[11px] leading-5 text-[#806e69]">{currentAlbum.description}</p>
                 </div>
 
                 <div className="text-sm font-bold text-slate-500 dark:text-slate-400 bg-white/40 dark:bg-slate-800/40 backdrop-blur-md px-5 py-2.5 rounded-2xl border border-white/50 dark:border-white/10 shadow-sm">
