@@ -11,9 +11,10 @@ import { siteConfig } from '../siteConfig'; // 如果路径报错，请检查层
 export default function Comments() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathname = usePathname();
+  const isConfigured = Boolean(siteConfig.gitalkConfig.clientID && siteConfig.gitalkConfig.repo && siteConfig.gitalkConfig.owner);
 
   useEffect(() => {
-    if (!containerRef.current) return;
+    if (!containerRef.current || !isConfigured) return;
 
     // 清空之前的评论区（防止 Next.js 路由切换时重复渲染）
     containerRef.current.innerHTML = '';
@@ -42,7 +43,11 @@ export default function Comments() {
       window.history.replaceState({}, document.title, url.toString());
     }
 
-  }, [pathname]);
+  }, [pathname, isConfigured]);
+
+  if (!isConfigured) {
+    return <div className="ayu-glass mt-8 rounded-[22px] px-5 py-6 text-center text-xs leading-6 text-[#846f69]">友链申请评论区将在站点 GitHub 评论配置完成后开放。</div>;
+  }
 
   return (
     <div className="w-full mt-16 relative">
